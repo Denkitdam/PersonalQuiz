@@ -15,21 +15,56 @@ final class ResultViewController: UIViewController {
     var answers: [Answer]!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupResultLabels()
     }
     
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
+        
     }
     
     private func getResultAnimal(from answers: [Answer]) -> Animal {
-        let countedAnswers = NSCountedSet(array: answers)
-        let mostFrequentAnimal = countedAnswers.max { countedAnswers.count(for: $0) < countedAnswers.count(for: $1)}
+        var dogCount = 0
+        var catCount = 0
+        var rabbitCount = 0
+        var turtleCount = 0
         
-        return mostFrequentAnimal as! Animal
+        for answer in answers {
+            switch answer.animal {
+                
+            case .dog:
+                dogCount += 1
+            case .cat:
+                catCount += 1
+            case .rabbit:
+                rabbitCount += 1
+            case .turtle:
+                turtleCount += 1
+            }
         }
-    private func setupResultLabels() {
+        let mostFrequentAnimal = max(
+            dogCount,
+            catCount,
+            rabbitCount,
+            turtleCount
+        )
+        var resultAnimal: Animal = .dog
         
+        if mostFrequentAnimal == dogCount {
+            resultAnimal = .dog
+        } else if mostFrequentAnimal == catCount {
+            resultAnimal = .cat
+        } else if mostFrequentAnimal == rabbitCount {
+            resultAnimal = .rabbit
+        } else if mostFrequentAnimal == turtleCount {
+            resultAnimal = .turtle
+        }
+        return resultAnimal
+    }
+    private func setupResultLabels() {
+        let resultAnimal = getResultAnimal(from: answers)
+        resultLabel.text = "Вы - \(resultAnimal.rawValue)"
+        resultDescriptionLabel.text = resultAnimal.definition
     }
     
     deinit {
