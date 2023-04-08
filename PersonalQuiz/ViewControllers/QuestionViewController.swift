@@ -40,12 +40,12 @@ final class QuestionViewController: UIViewController {
         rangedSlider.maximumValue = answerCount
         rangedSlider.value = answerCount / 2
     }
-
+    
     // MARK: - ovveride methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let resultVC = segue.destination as? ResultViewController { return }
-        
+        guard let resultVC = segue.destination as? ResultViewController else { return }
+        resultVC.answers = answersChosen
     }
     
     // MARK: - IB Actions
@@ -75,7 +75,9 @@ final class QuestionViewController: UIViewController {
     deinit {
         print("\(type(of: self)) has been deallocated")
     }
+
 }
+
 
 // MARK: - Private Methods
 private extension QuestionViewController {
@@ -151,3 +153,4 @@ private extension QuestionViewController {
         performSegue(withIdentifier: "showResult", sender: nil)
     }
 }
+
