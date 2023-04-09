@@ -16,14 +16,15 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupResultLabels()
+        navigationItem.setHidesBackButton(true, animated: false)
     }
     
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
-        
     }
     
     private func getResultAnimal(from answers: [Answer]) -> Animal {
+        var resultAnimal: Animal = .dog
         var dogCount = 0
         var catCount = 0
         var rabbitCount = 0
@@ -48,8 +49,6 @@ final class ResultViewController: UIViewController {
             rabbitCount,
             turtleCount
         )
-        var resultAnimal: Animal = .dog
-        
         if mostFrequentAnimal == dogCount {
             resultAnimal = .dog
         } else if mostFrequentAnimal == catCount {
